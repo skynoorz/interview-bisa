@@ -22,7 +22,7 @@ import static com.bisa.interview.model.DataUtil.CREADO;
 @Entity
 @Getter @Setter
 @NoArgsConstructor
-public class Cliente extends Persona{
+public class Cliente{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "custom-id-generator")

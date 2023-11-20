@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 
+import static com.bisa.interview.model.DataUtil.CREADO;
+
 @Service
 public class ReferenciaService {
 
@@ -37,5 +39,13 @@ public class ReferenciaService {
         nuevaReferencia.setMotivoEliminado("Sin eliminación");
 
         return referenciaDao.save(nuevaReferencia);
+    }
+
+    public Integer countReferencias(Long clienteId) {
+        return referenciaDao.countReferencias(clienteId);
+    }
+
+    public void delete(Long idReferencia) {
+        referenciaDao.deleteById(idReferencia);
     }
 }

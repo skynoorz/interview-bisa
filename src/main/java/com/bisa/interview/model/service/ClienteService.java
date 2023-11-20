@@ -18,4 +18,8 @@ public class ClienteService {
     public Cliente obtenerClientePorId(Long id) {
         return clienteDao.findById(id).orElse(null);
     }
+
+    public void actualizarEstado(Long id, String estado) {
+        clienteDao.updateEstado(id, estado);
+    }
 }

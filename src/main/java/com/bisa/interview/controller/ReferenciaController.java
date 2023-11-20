@@ -1,8 +1,6 @@
 package com.bisa.interview.controller;
 
-import com.bisa.interview.model.entity.Cliente;
-import com.bisa.interview.model.entity.Persona;
-import com.bisa.interview.model.entity.ReferenciaPersona;
+import com.bisa.interview.model.entity.Referencia;
 import com.bisa.interview.model.service.ClienteService;
 import com.bisa.interview.model.service.PersonaService;
 import com.bisa.interview.model.service.ReferenciaService;
@@ -14,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,22 +31,17 @@ public class ReferenciaController {
 
 
     @PostMapping
-    public ResponseEntity<?> crearNuevaReferencia(@RequestBody ReferenciaPersona nuevaReferencia) {
+    public ResponseEntity<?> save(@RequestBody Referencia nuevaReferencia) {
         Map<String, Object> response = new HashMap<>();
 
-        Cliente cliente = clienteService.obtenerClientePorId(nuevaReferencia.getCliente().getId());
-        Persona persona = personaService.obtenerPersonaPorId(nuevaReferencia.getPersona().getId());
-
-        if (null != cliente && null != persona) {
-            nuevaReferencia.setCliente(cliente);
-            nuevaReferencia.setPersona(persona);
-            ReferenciaPersona referenciaGuardada = referenciaService.save(nuevaReferencia);
+        try {
+            Referencia referenciaGuardada = referenciaService.save(nuevaReferencia.getCliente().getId(), nuevaReferencia.getPersonaReferencia().getId());
             response.put("cliente", referenciaGuardada);
             response.put("mensaje", "El registro de la referencia fue satisfactorio.");
             return new ResponseEntity<>(response, HttpStatus.CREATED);
+        } catch (EntityNotFoundException e) {
+            response.put("mensaje", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
-
-        response.put("mensaje", "No se encontro el cliente o la persona con los ids solicitados");
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 }

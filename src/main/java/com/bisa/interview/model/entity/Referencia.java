@@ -1,6 +1,7 @@
 package com.bisa.interview.model.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -13,7 +14,8 @@ import javax.persistence.ManyToOne;
 
 @Entity
 @Getter @Setter
-public class ReferenciaPersona {
+@NoArgsConstructor
+public class Referencia {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "custom-id-generator")
@@ -25,9 +27,10 @@ public class ReferenciaPersona {
     private Cliente cliente;
 
     @ManyToOne
-    @JoinColumn(name = "persona_id")
-    private Persona persona;
+    @JoinColumn(name = "persona_referencia_id")
+    private Persona personaReferencia;
 
     private boolean eliminado;
     private String motivoEliminado;
 }
+

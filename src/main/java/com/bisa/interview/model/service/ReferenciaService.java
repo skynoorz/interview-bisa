@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 
 import static com.bisa.interview.model.DataUtil.CREADO;
 
@@ -45,7 +46,8 @@ public class ReferenciaService {
         return referenciaDao.countReferencias(clienteId);
     }
 
-    public void delete(Long idReferencia) {
-        referenciaDao.deleteById(idReferencia);
+    @Transactional
+    public void delete(Long idReferencia, String motivo) {
+        referenciaDao.updateEliminado(idReferencia, motivo);
     }
 }

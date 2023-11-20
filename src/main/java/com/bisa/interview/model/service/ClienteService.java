@@ -5,6 +5,8 @@ import com.bisa.interview.model.entity.Cliente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 public class ClienteService {
 
@@ -19,6 +21,7 @@ public class ClienteService {
         return clienteDao.findById(id).orElse(null);
     }
 
+    @Transactional
     public void actualizarEstado(Long id, String estado) {
         clienteDao.updateEstado(id, estado);
     }

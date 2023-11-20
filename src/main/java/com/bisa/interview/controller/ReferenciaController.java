@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,21 +56,29 @@ public class ReferenciaController {
         }
     }
 
-    @DeleteMapping
-    public ResponseEntity<?> delete(@RequestParam Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id, @RequestBody Map<String, String> motivoEliminacion) {
         Map<String, Object> response = new HashMap<>();
         try {
-            referenciaService.delete(id);
+            String motivo = motivoEliminacion.get("motivo");
+            referenciaService.delete(id, motivo);
             String newEstado = updateEstado(id);
             response.put("nuevo_estado", newEstado);
         } catch (DataAccessException e) {
-            response.put("mensaje", "Error al eliminar referenca en la base de datos");
+            response.put("mensaje", "Error al eliminar referencia en la base de datos");
             response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        response.put("mensaje", "El registro de la referencia con id: '".concat(id.toString().concat("' se elimino correctamente")));
+        response.put("mensaje", "El registro de la referencia con id: '".concat(id.toString().concat("' se eliminó correctamente")));
         return new ResponseEntity<Map>(response, HttpStatus.OK);
     }
+
+
+//    @GetMapping
+//    public ResponseEntity<?> getAll() {
+//
+//        Integer totalReferencias = referenciaService.countReferencias();
+//    }
 
     private String updateEstado(Long idCliente) {
         Integer references = referenciaService.countReferencias(idCliente);

@@ -10,6 +10,6 @@ public class CustomIdGenerator implements IdentifierGenerator {
 
     @Override
     public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
-        return System.currentTimeMillis() + "_" + Math.random();
+        return System.currentTimeMillis();
     }
 }

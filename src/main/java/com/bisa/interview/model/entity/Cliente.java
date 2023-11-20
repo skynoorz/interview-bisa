@@ -2,6 +2,7 @@ package com.bisa.interview.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -16,9 +17,12 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.time.LocalDate;
 
+import static com.bisa.interview.model.DataUtil.CREADO;
+
 @Entity
 @Getter @Setter
-public class Cliente {
+@NoArgsConstructor
+public class Cliente extends Persona{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "custom-id-generator")
@@ -35,17 +39,20 @@ public class Cliente {
     @NotNull(message = "La fecha de nacimiento es obligatoria")
     @Past(message = "La fecha de nacimiento debe estar en el pasado")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @JsonFormat(pattern = "MM/dd/yyyy")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate fechaNacimiento;
 
     @NotBlank(message = "El campo de ocupación no puede estar en blanco.")
     private String ocupacion;
+
+    private String estado;
 
     public Cliente(String email, Long telefono, LocalDate fechaNacimiento, String ocupacion) {
         this.email = email;
         this.telefono = telefono;
         this.fechaNacimiento = fechaNacimiento;
         this.ocupacion = ocupacion;
+        this.estado = CREADO;
     }
 
     public void validarEdad() {

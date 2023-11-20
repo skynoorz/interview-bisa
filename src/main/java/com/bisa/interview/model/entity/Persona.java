@@ -2,6 +2,7 @@ package com.bisa.interview.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,6 +18,7 @@ import java.time.LocalDate;
 
 @Entity
 @Getter @Setter
+@NoArgsConstructor
 public class Persona {
 
     @Id
@@ -38,7 +40,7 @@ public class Persona {
     @NotNull(message = "La fecha de nacimiento es obligatoria")
     @Past(message = "La fecha de nacimiento debe estar en el pasado")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @JsonFormat(pattern = "MM/dd/yyyy")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate fechaNacimiento;
 
     @Size(max = 50, message = "La direccion debe tener como maximo 50 caracteres")

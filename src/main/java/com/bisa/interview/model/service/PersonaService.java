@@ -14,4 +14,8 @@ public class PersonaService {
     public Persona save(Persona persona) {
         return this.personaDao.save(persona);
     }
+
+    public Persona obtenerPersonaPorId(Long id) {
+        return personaDao.findById(id).orElse(null);
+    }
 }

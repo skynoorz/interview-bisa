@@ -14,4 +14,8 @@ public class ClienteService {
     public Cliente save(Cliente cliente) {
         return this.clienteDao.save(cliente);
     }
+
+    public Cliente obtenerClientePorId(Long id) {
+        return clienteDao.findById(id).orElse(null);
+    }
 }

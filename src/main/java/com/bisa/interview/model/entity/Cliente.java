@@ -32,9 +32,6 @@ public class Cliente extends Persona{
         this.estado = CREADO;
     }
 
-//    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private Set<Referencia> referencias = new HashSet<>();
-
     public void validarEdad() {
         LocalDate fechaActual = LocalDate.now();
         if (getFechaNacimiento().plusYears(18).isAfter(fechaActual)) {

@@ -74,6 +74,8 @@ Se escogió la base de datos H2 debido a la simplicidad en el despliegue de apli
 
 Para tener acceso a la base de datos se debe dirigir a la direccion: `http://localhost:8080/h2-console` el puerto puede variar si esta ocupado.
 
+_NOTA: Si se tuviera algún problema al abrir la direccion mencionada cuando se esta siendo ejecutado bajo docker, 
+puede que exista un problema con los puertos_
 
 ## API Reference
 

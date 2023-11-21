@@ -44,6 +44,11 @@ public class ReferenciaService {
 
     @Transactional
     public void delete(Long idReferencia, String motivo) {
+        if (referenciaDao.existsByIdReferencia(idReferencia) > 0) {
+            referenciaDao.updateEliminado(idReferencia, motivo);
+        } else {
+            throw new EntityNotFoundException("No se encontró la entidad con ID: " + idReferencia);
+        }
         referenciaDao.updateEliminado(idReferencia, motivo);
     }
 

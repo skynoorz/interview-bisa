@@ -8,6 +8,7 @@ import com.bisa.interview.model.service.ClienteService;
 import com.bisa.interview.model.service.PersonaService;
 import com.bisa.interview.model.service.ReferenciaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -68,8 +69,11 @@ public class ReferenciaController {
             referenciaService.delete(id, motivo);
             String newEstado = updateEstado(id);
             response.put("nuevo_estado", newEstado);
-        } catch (Exception e) {
+        } catch (DataAccessException e) {
             response.put("mensaje", "Error al eliminar referencia en la base de datos");
+            response.put("error", e.getMessage().concat(": ").concat(e.getMessage()));
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (EntityNotFoundException e) {
             response.put("error", e.getMessage().concat(": ").concat(e.getMessage()));
             return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }

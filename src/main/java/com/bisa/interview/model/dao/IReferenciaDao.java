@@ -14,6 +14,9 @@ public interface IReferenciaDao extends JpaRepository<Referencia, Long> {
     @Query("UPDATE Referencia r SET r.eliminado = true, r.motivoEliminado = :motivo WHERE r.id = :idReferencia")
     void updateEliminado(@Param("idReferencia") Long idReferencia, @Param("motivo") String motivo);
 
+    @Query("SELECT COUNT(r) FROM Referencia r WHERE r.id = :idReferencia")
+    int existsByIdReferencia(@Param("idReferencia") Long idReferencia);
+
     @Query("SELECT COUNT(r) FROM Referencia r WHERE r.cliente.id = :clienteId AND r.eliminado <> true")
     Integer countReferenciasCliente(@Param("clienteId") Long clienteId);
 

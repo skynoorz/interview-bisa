@@ -1,0 +1,173 @@
+{
+	"info": {
+		"_postman_id": "1526aa57-5141-443b-9f7f-920c9d2c5656",
+		"name": "RESTful API Interview BISA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10095959"
+	},
+	"item": [
+		{
+			"name": "Persona",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"Ronald\",\r\n  \"apPaterno\": \"Guarachi\",\r\n  \"apMaterno\": \"Enriquez\",\r\n  \"fechaNacimiento\": \"1995-03-18\",\r\n  \"direccion\": \"DireccionEjemplo\",\r\n  \"carnet\": 9086429\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/persona",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"persona"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cliente",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"Ronald\",\r\n  \"apPaterno\": \"Guarachi\",\r\n  \"apMaterno\": \"Enriquez\",\r\n  \"fechaNacimiento\": \"1995-03-18\",\r\n  \"direccion\": \"DireccionEjemplo\",\r\n  \"carnet\": 9086429,\r\n  \"email\": \"raguarachi0@gmail.com\",\r\n  \"telefono\": 79145207,\r\n  \"ocupacion\": \"Informatico\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/cliente",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"cliente"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Referencia",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cliente\": {\r\n        \"id\": 2\r\n    },\r\n    \"personaReferencia\": {\r\n        \"id\": 13\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/referencia",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"referencia"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"motivo\": \"Se elimino este registro por falta de pago.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/referencia/21",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"referencia",
+								"21"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Referencias",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/referencia",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"referencia"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080"
+		}
+	]
+}

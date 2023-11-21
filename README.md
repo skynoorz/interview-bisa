@@ -4,13 +4,10 @@
 En esta entrevesta se lleva a cabo la prueba técnica en el cual es una APIs REST necesarias para una aplicación de gestión de clientes. El objetivo de estas APIs es permitir determinar
 la accesibilidad del cliente en base a la información de referencias registradas.
 
-
-
-
 ## Requisitos
 
 - Java JDK 17
-- Postman
+- Postman _(No obligatorio, pero práctico para  probar las API)_
 - Maven
 ## Run Locally
 
@@ -175,6 +172,12 @@ La respuesta tiene el siguiente formato:
     }
 }
 ```
+
+## Postman Collection
+
+La colección de Postman se encuentre en la raiz del proyecto: `./postman.collection`
+
+Puedes importarlo desde Postman! `Postman > File > Import > Select file`
 
 ## Author
 _Ronald Alcides Guarachi Enriquez - Software Engineer_

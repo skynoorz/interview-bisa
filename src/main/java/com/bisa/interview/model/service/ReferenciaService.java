@@ -42,12 +42,16 @@ public class ReferenciaService {
         return referenciaDao.save(nuevaReferencia);
     }
 
-    public Integer countReferencias(Long clienteId) {
-        return referenciaDao.countReferencias(clienteId);
-    }
-
     @Transactional
     public void delete(Long idReferencia, String motivo) {
         referenciaDao.updateEliminado(idReferencia, motivo);
+    }
+
+    public Integer countReferenciasCliente(Long clienteId) {
+        return referenciaDao.countReferenciasCliente(clienteId);
+    }
+
+    public Integer countReferenciasPersona(Long clienteId) {
+        return referenciaDao.countReferenciasPersona(clienteId);
     }
 }

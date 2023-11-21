@@ -1,5 +1,8 @@
 package com.bisa.interview.controller;
 
+import com.bisa.interview.model.entity.accesibilidad.Accesibilidad;
+import com.bisa.interview.model.entity.Cliente;
+import com.bisa.interview.model.entity.Persona;
 import com.bisa.interview.model.entity.Referencia;
 import com.bisa.interview.model.service.ClienteService;
 import com.bisa.interview.model.service.PersonaService;
@@ -14,11 +17,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.bisa.interview.model.DataUtil.ACTIVO;
@@ -74,14 +77,50 @@ public class ReferenciaController {
     }
 
 
-//    @GetMapping
-//    public ResponseEntity<?> getAll() {
-//
-//        Integer totalReferencias = referenciaService.countReferencias();
-//    }
+    @GetMapping
+    public ResponseEntity<Accesibilidad> getReferenciasByAccessibilidad() {
+        Map<String, Object> response = new HashMap<>();
+        Accesibilidad accesibilidad = new Accesibilidad();
+
+        // Lista para REFERENCIAS DE TIPO CLIENTE
+        List<Cliente> clienteList = clienteService.findAll();
+        for (Cliente cliente : clienteList) {
+            Integer totalReferencias = referenciaService.countReferenciasCliente(cliente.getId());
+            if (totalReferencias >= 2)
+                accesibilidad.getAccesibilidadCliente().getBuena().add(cliente);
+            if (totalReferencias >= 1)
+                accesibilidad.getAccesibilidadCliente().getBuena().add(cliente);
+            if (totalReferencias == 1)
+                accesibilidad.getAccesibilidadCliente().getRegular().add(cliente);
+            if (totalReferencias == 0) {
+                accesibilidad.getAccesibilidadCliente().getRegular().add(cliente);
+                accesibilidad.getAccesibilidadCliente().getMala().add(cliente);
+                accesibilidad.getAccesibilidadCliente().getNula().add(cliente);
+            }
+        }
+        // Lista para el TOTAL REFERENCIAS
+        List<Persona> personaList = personaService.findAll();
+        for (Persona persona : personaList) {
+            Integer totalReferencias = referenciaService.countReferenciasPersona(persona.getId());
+            if (totalReferencias >= 2) {
+                accesibilidad.getAccesibilidadTotal().getBuena().add(persona);
+                accesibilidad.getAccesibilidadTotal().getRegular().add(persona);
+            }
+            if (totalReferencias >= 3)
+                accesibilidad.getAccesibilidadTotal().getBuena().add(persona);
+            if (totalReferencias == 1) {
+                accesibilidad.getAccesibilidadTotal().getRegular().add(persona);
+                accesibilidad.getAccesibilidadTotal().getMala().add(persona);
+            }
+            if (totalReferencias == 0)
+                accesibilidad.getAccesibilidadTotal().getNula().add(persona);
+        }
+
+        return new ResponseEntity<>(accesibilidad, HttpStatus.OK);
+    }
 
     private String updateEstado(Long idCliente) {
-        Integer references = referenciaService.countReferencias(idCliente);
+        Integer references = referenciaService.countReferenciasCliente(idCliente);
         if (references >= 1) {
             clienteService.actualizarEstado(idCliente, ACTIVO);
             return ACTIVO;

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class ClienteService {
@@ -24,5 +25,9 @@ public class ClienteService {
     @Transactional
     public void actualizarEstado(Long id, String estado) {
         clienteDao.updateEstado(id, estado);
+    }
+
+    public List<Cliente> findAll() {
+        return clienteDao.findAll();
     }
 }
